@@ -38,18 +38,17 @@ public class CustomErrorController implements ErrorController {
 
     @RequestMapping(value = PATH)
     ResponseEntity<ApiError> error(WebRequest webRequest, HttpServletResponse response) {
-        final ApiError error = new ApiError(HttpStatus.valueOf(response.getStatus()), getErrorAttributes(webRequest, debug));
+        final ApiError error = new ApiError(HttpStatus.valueOf(response.getStatus()), new Throwable("Custom Error"));
         
 		return ResponseEntity.status(response.getStatus()).body(error);
     }
 
-    @Override
     public String getErrorPath() {
         return PATH;
     }
 
-    private Map<String, Object> getErrorAttributes(WebRequest webRequest, boolean includeStackTrace) {
-        return errorAttributes.getErrorAttributes(webRequest, includeStackTrace);
-    }
+    // private Map<String, Object> getErrorAttributes(WebRequest webRequest, boolean includeStackTrace) {
+    //     return errorAttributes.getErrorAttributes(webRequest, includeStackTrace);
+    // }
     
 }
